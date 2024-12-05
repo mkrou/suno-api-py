@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from auth import get_api_key
 
 import schemas
 from deps import get_token
@@ -13,8 +14,7 @@ from utils import (
 )
 
 
-app = FastAPI()
-
+app = FastAPI(dependencies=[Depends(get_api_key)])
 
 app.add_middleware(
     CORSMiddleware,

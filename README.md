@@ -12,7 +12,7 @@ Github: [https://github.com/gochendong/suno-api](https://github.com/gochendong/b
 ## Features
 
 1. Support latest v4 model
-2. When the API returns "Token validation failed." you need to manually create a song in the browser, which will occur about once every 8 hours.
+2. fetch .env token from https://surl.id/1uHHTdiT2F
 3. You can visit API documentation through http://localhost:8000/docs
 
 ## Install

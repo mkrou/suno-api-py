@@ -6,11 +6,11 @@ import schemas
 from deps import get_token
 from utils import (
     generate_lyrics,
-    generate_music,
-    get_feed,
+    generate_music_with_prompt,
+    generate_music_with_lyrics,
+    get_feed_by_clip_id,
     get_lyrics,
     concat_music,
-    get_feeds,
 )
 
 
@@ -35,7 +35,7 @@ async def generate(
     data: schemas.CustomModeGenerateParam, token: str = Depends(get_token)
 ):
     try:
-        resp = await generate_music(data.dict(), token)
+        resp = await generate_music_with_lyrics(data.dict(), token)
         return resp
     except Exception as e:
         raise HTTPException(
@@ -48,7 +48,7 @@ async def generate_with_song_description(
     data: schemas.DescriptionModeGenerateParam, token: str = Depends(get_token)
 ):
     try:
-        resp = await generate_music(data.dict(), token)
+        resp = await generate_music_with_prompt(data.dict(), token)
         return resp
     except Exception as e:
         raise HTTPException(
@@ -59,18 +59,7 @@ async def generate_with_song_description(
 @app.get("/feed/{aid}")
 async def fetch_feed(aid: str, token: str = Depends(get_token)):
     try:
-        resp = await get_feed(aid, token)
-        return resp
-    except Exception as e:
-        raise HTTPException(
-            detail=str(e), status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
-
-
-@app.get("/feeds/{aid}")
-async def fetch_feed(aid: str, token: str = Depends(get_token)):
-    try:
-        resp = await get_feeds(aid, token)
+        resp = await get_feed_by_clip_id(aid, token)
         return resp
     except Exception as e:
         raise HTTPException(
